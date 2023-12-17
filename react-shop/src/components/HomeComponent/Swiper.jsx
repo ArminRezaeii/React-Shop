@@ -1,7 +1,7 @@
 import { Navigation } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/navigation';
-import { Swiper, SwiperSlide, useSwiper } from 'swiper/react';
+import { Swiper, SwiperSlide} from 'swiper/react';
 import { useSelector } from 'react-redux';
 import { products } from '../../store/features/data';
 import { Pagination } from 'swiper/modules';

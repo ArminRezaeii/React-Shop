@@ -11,7 +11,7 @@ const theme = createTheme({
 
 
 function App(props) {
-    const [value, setValue] = useState(0);
+    const [value, setValue] = useState(0)
     const [avrage, setAvrage] = useState(0)
     const handleChange = (event, newValue) => {
         setValue(newValue)
@@ -74,8 +74,8 @@ function App(props) {
                                 <span className='text-mainColor text-4xl'>{(props.data.review.reduce((x, pro) => x + pro.rate, 0) / props.data.review.length).toFixed(1)}</span>
                                 <span className='text-textColor3 text-base'>({props.data.review.length} Reviews)</span>
                             </div>
-                            <div className='lg:w-[50%] w-[100%] items-center flex bg-gray-100 flex-col'>
-                                <span className='font-bold text-lg'>Based on 3 Reviews</span>
+                            <div className='lg:w-[50%] w-[100%] items-center flex flex-col'>
+                                <span className='font-bold mb-2 text-lg'>Based on 3 Reviews</span>
                                 {props.data.review.map((reviews) => {
                                     return <div className=' flex w-full items-center justify-evenly'>
                                         <span>{reviews.rate}</span>

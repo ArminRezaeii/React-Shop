@@ -1,28 +1,41 @@
-import { useSelector } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import backgorundImage from "../../assets/images/PageNameBackgorundColor.png"
-import { products } from "../../store/features/data"
+import { addParams, dataFilter, products } from "../../store/features/data"
 import { useState, useEffect } from "react"
 import { Link, useSearchParams } from "react-router-dom"
+import { Slider, ThemeProvider, createTheme } from "@mui/material"
 
 function Shop() {
     const product = useSelector(products)
     const [categories, setCategories] = useState([])
     const [brands, setBrands] = useState([])
+
     const [searchparams, setSearchparams] = useSearchParams()
-    const [filter, setFilter] = useState({
-        sort: "",
-        categories: [],
-        search: "",
-        brands: [],
-    })
-    const [data, setdata] = useState([])
+    const dispatch = useDispatch()
+    const dataFilterd = useSelector(dataFilter)
+    const price = product.map(item => item.price)
+    const priceSet = [... new Set(price)].sort()
     useEffect(() => {
         setCategories([...new Set(product.flatMap(product => product.categories))])
         setBrands([...new Set(product.flatMap(product => product.brand))])
-        const procutFilter = product.slice().sort((a, b) => filter.sort == "Highest to Lowest" ? b.price - a.price : filter.sort == "Lowest to Highest" ? a.price - b.price : "").filter((product) =>
-            (filter.categories.length == 0 || product.categories.some(cat => filter.categories.includes(cat))) && (filter.brands.length == 0 || filter.brands.includes(product.brand)) && (filter.search.length == 0 || product.name.toLowerCase().startsWith(filter.search.toLocaleLowerCase())))
-        setdata(procutFilter)
-    }, [filter, searchparams])
+
+        dispatch(addParams([...searchparams]))
+    }, [searchparams])
+    const [value, setValue] = useState([priceSet[0], priceSet[priceSet.length - 1]])
+
+    const handleChange = (event, newValue) => {
+        setValue(newValue)
+        searchparams.set("price", value)
+        setSearchparams(searchparams)
+   
+    }
+    const theme = createTheme({
+        palette: {
+            primary: {
+                main: "#384AEB"
+            }
+        }
+    })
 
     return <main>
 
@@ -117,11 +130,20 @@ function Shop() {
                         </div>
 
                     </div>
-
                     <div style={{ backgroundImage: `url(${backgorundImage})` }}
                         class="w-[100%] flex flex-col items-center justify-center border-b  border-eee">
                         <p class="mb-3 mt-3">Price</p>
-
+                        <div className="w-[80%]">
+                            <ThemeProvider theme={theme}>
+                                <Slider
+                                    value={value}
+                                    onChange={handleChange}
+                                    valueLabelDisplay="auto"
+                                    min={priceSet[0]}
+                                    max={priceSet[priceSet.length - 1]}
+                                />
+                            </ThemeProvider>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -134,8 +156,7 @@ function Shop() {
                             if (selectedSort === "Default sorting") {
                                 searchparams.delete("sort")
                             } else {
-                                // Set the selected sorting option
-                                searchparams.set("sort", selectedSort);
+                                searchparams.set("sort", selectedSort)
                             }
                             setSearchparams(searchparams);
                         }} class="lg:w-40 md:w-40  px-2 md:px-4 py-2">
@@ -148,12 +169,7 @@ function Shop() {
 
                     <div class="flex items-center lg:w-[30%]  bg-white h-[38px]">
                         <input type="text" onChange={(e) => {
-                            setFilter((prev) => {
-                                return {
-                                    ...prev,
-                                    search: e.target.value
-                                }
-                            })
+
                         }} class="border-none px-3 outline-none bg-inherit w-[90%]"
                             placeholder="Search" />
                         <div>
@@ -168,7 +184,7 @@ function Shop() {
 
                 </div>
                 <div class="w-[100%] mt-6  flex-wrap items-center justify-between  gap-7 flex">
-                    {data.map((product) => {
+                    {dataFilterd.map((product) => {
                         return <div key={product.id} class="lg:w-[29%]  items-center md:w-[45%]  w-[100%]  h-[430px]  group flex flex-col">
                             <div class="  relative overflow-y-hidden ">
                                 <img src={product.image} />

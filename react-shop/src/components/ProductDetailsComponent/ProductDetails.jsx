@@ -3,7 +3,6 @@ import backgroundImage from "../../assets/images/PageNameBackgorundColor.png"
 import { useSelector } from "react-redux"
 import { useLoaderData } from "react-router-dom"
 import { products } from "../../store/features/data"
-import Tabs from "./Tabas"
 import Tabss from "./Tabas"
 export function loader(data) {
     return data.params.id
@@ -18,6 +17,7 @@ function ProductDetails() {
         Setdata(find)
 
     }, [product])
+   
     return (<>
         <div style={{ backgroundImage: `url(${backgroundImage})` }}
             class="w-[100%] h-[410px]  flex items-center justify-center">
