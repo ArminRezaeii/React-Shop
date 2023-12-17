@@ -17,7 +17,7 @@ function ProductDetails() {
         Setdata(find)
 
     }, [product])
-   
+
     return (<>
         <div style={{ backgroundImage: `url(${backgroundImage})` }}
             class="w-[100%] h-[410px]  flex items-center justify-center">
@@ -54,8 +54,8 @@ function ProductDetails() {
                     <div class="text-textColor">
                         {data.introduction}
                     </div>
-                    <div class=" w-[90%] justify-between items-center bg-white flex h-[51px]">
-                        <div class="w-[40%] flex h-[100%] justify-between items-center bg-white">
+                    <div class=" lg:w-[90%] w-[100%] justify-between items-center bg-white flex h-[51px]">
+                        <div class="lg:w-[40%] w-[50%] flex h-[100%] justify-between items-center bg-white">
                             <span>Quantity:</span>
                             <input type="text" value={quantity} onChange={(e) => SetQuantity(e.target.value)} class=" pl-3 border-eee border bg-inherit w-[79px] h-[29px]" />
                         </div>

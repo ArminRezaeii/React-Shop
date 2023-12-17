@@ -3,14 +3,33 @@ import './App.css'
 import { Link, Outlet } from 'react-router-dom';
 import backgroundImage from "./assets/images/background-image2.png"
 import backgroundImage2 from "./assets/images/background-image.png"
+import { useState } from 'react';
 function App() {
+  const [isOpen, setIsOpen] = useState(false);
+
+  const toggleMenu = () => {
+    setIsOpen(!isOpen)
+  };
   return (<>
-    <nav className="w-max-[100%]  h-[89px]">
+    <nav className="w-max-[100%] lg:h-[89px]">
 
-      <div className="w-[59.9%]  justify-between h-[100%]  mx-auto flex flex-row">
-
+      <div className="lg:w-[59.9%] mt-3 w-[80%]  justify-between h-[100%]  mx-auto flex flex-row">
         <div className="flex justify-center items-center"><img src="/assets/images/logo.png" alt="" /></div>
-        <div className="w-[85%] items-center justify-evenly flex flex-row">
+
+        <div className="w-[85%]  items-center justify-end lg:justify-evenly  flex lg:flex-row">
+          <div className="lg:hidden">
+            <button onClick={toggleMenu} className={`text-mainColor focus:outline-none transition-transform duration-300 ease-in-out ${isOpen ? 'rotate-180' : ''}`}>
+              {isOpen ? (
+                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12"></path>
+                </svg>
+              ) : (
+                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16m-7 6h7"></path>
+                </svg>
+              )}
+            </button>
+          </div>
 
           <div className="w-[378px]  lg:flex ml-6 hidden justify-center items-center">
             <ul className="flex gap-x-14">
@@ -46,8 +65,21 @@ function App() {
             </div>
           </div>
         </div>
-      </div>
 
+      </div>
+      <div className='w-[80%] bg-white mx-auto'>
+        {isOpen && (
+          <div className={`mt-4 flex items-center justify-center transition-opacity  duration-300 ease-in-out ${isOpen ? 'opacity-100 transform translate-y-0' : 'opacity-0 transform -translate-y-full pointer-events-none'}`}>
+            <ul className="flex flex-col space-y-2">
+              <li><Link to="/home"  >Home</Link></li>
+              <li><Link to="/shop" >Shop</Link></li>
+              <li><Link  >Contact</Link></li>
+            </ul>
+          </div>
+        )}
+
+
+      </div>
 
     </nav>
     <Outlet />
@@ -61,7 +93,7 @@ function App() {
         class="sm:w-[58.3%] sm:h-[100%] h-[267px] w-[95%] sm:py-[85px] sm:px-[300px] flex items-center justify-center bg-white shadow-boxSHodw mx-auto">
         <div class="w-[1090px] flex flex-col h-[187px] items-center  gap-12">
           <div class=" flex items-center flex-col gap-4">
-            <span class="text-textColor2 sm:text-4xl text-2xl text font-bold ">GET UPDATE FROM
+            <span class="text-textColor2 sm:text-4xl text-1xl text font-bold ">GET UPDATE FROM
               ANYWHERE</span>
             <span class="text-base text-textColor2 leading-6">Bearing Void gathering light light his
               eavening unto
@@ -69,10 +101,10 @@ function App() {
           </div>
           <div class="flex flex-row gap-8">
             <input
-              class=" border border-eee placeholder:text-base focus:outline-none sm:w-[380px] sm:h-[50px] w-[193px] h-[41px] py-[6px] pl-[12px]  rounded-[30px] placeholder:text-textColor4"
+              class=" border border-eee placeholder:text-base focus:outline-none sm:w-[380px] sm:h-[50px] w-[180px] h-[41px] py-[6px] pl-[12px]  rounded-[30px] placeholder:text-textColor4"
               type="text" placeholder="Your Email Address" />
             <button
-              class="border  hover:bg-inherit transition ease-linear  hover:text-black border-blue text-white bg-primary rounded-[30px] sm:w-[173px] w-[146px] h-[41px] sm:h-[47px]">Subscribe
+              class="border  hover:bg-inherit transition ease-linear  hover:text-black border-blue text-white bg-primary rounded-[30px] sm:w-[173px] w-[130px] h-[40px] sm:h-[47px]">Subscribe
               Now</button>
           </div>
         </div>
